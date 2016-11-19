@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 24
@@ -17,6 +18,51 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+
+    publications = ['mavenStuff'] //When uploading Maven-based publication files
+
+    dryRun = true //[Default: false] Whether to run this as dry-run, without deploying
+    publish = false //[Default: false] Whether version should be auto published after an upload
+    override = false //[Default: false] Whether to override version artifacts already published
+
+    //Package configuration. The plugin will use the repo and name properties to check if the package already exists. In that case, there's no need to configure the other package properties (like userOrg, desc, etc).
+    pkg {
+        repo = 'aliaksei135'
+        name = 'DeviceIdleMonitor'
+        desc = 'A simple library to invoke a callback when device idle time exceeds more than a specified limit.'
+        websiteUrl = 'https://github.com/aliaksei135/DeviceIdleMonitor'
+        issueTrackerUrl = 'https://github.com/aliaksei135/DeviceIdleMonitor/issues'
+        vcsUrl = 'https://github.com/aliaksei135/DeviceIdleMonitor.git'
+        licenses = ['Apache-2.0']
+        publicDownloadNumbers = true
+
+        githubReleaseNotesFile = 'README.md' //Optional Github readme file
+
+        //Optional version descriptor
+        version {
+            name = '0.3' //Bintray logical version name
+//            desc = //Optional - Version-specific description
+            released = new Date()
+            vcsTag = '0.3'
+
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+            }
+
+            //Optional configuration for Maven Central sync of the version
+//            mavenCentralSync {
+//                sync = false //[Default: true] Determines whether to sync the version to Maven Central.
+//                user = 'userToken' //OSS user token: mandatory
+//                password = 'paasword' //OSS user password: mandatory
+//                close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
+//            }
         }
     }
 }

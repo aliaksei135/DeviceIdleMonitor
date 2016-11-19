@@ -1,6 +1,8 @@
 # DeviceIdleMonitor
 A simple library to invoke a callback when device idle time exceeds more than a specified limit.
 
+This is easy to implement without a library, this is just so I can play around with Maven :)
+
 #Usage
 Grab it from Maven:
 

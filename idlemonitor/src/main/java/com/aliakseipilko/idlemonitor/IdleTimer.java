@@ -10,6 +10,7 @@ public class IdleTimer {
     private static DeviceIdleListener callback;
     private Handler timer;
     private Runnable task;
+    private long duration;
 
     private IdleTimer() {
         //Nothing needed here
@@ -28,13 +29,17 @@ public class IdleTimer {
         callback.onDeviceStateIdle();
     }
 
-    public void setTimer(long millis) {
+    public void restart() {
+        start(duration);
+    }
+
+    public void start(long millis) {
         nullify();
         setTask();
+        duration = millis;
         timer = new Handler();
-        //After 5 mins inactivity
         timer.postDelayed(task, millis);
-        Log.d(TAG, "Normal timer set");
+        Log.d(TAG, "Idle timer set for " + millis + " millis");
     }
 
     private void setTask() {
@@ -58,7 +63,7 @@ public class IdleTimer {
         }
     }
 
-    public void registerIdleCallback(DeviceIdleListener callback) {
+    public void registerCallback(DeviceIdleListener callback) {
         IdleTimer.callback = callback;
     }
 

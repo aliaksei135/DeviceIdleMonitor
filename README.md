@@ -10,7 +10,7 @@ Grab it from Maven:
 
 Implement the DeviceIdleListener interface:
 
-    ... extends IdleTimer.DeviceIdleListener ...
+    ... implements IdleTimer.DeviceIdleListener ...
     
     
     @Override
